@@ -141,3 +141,24 @@ Sản phẩm có phạm vi là website portfolio tĩnh, cấu trúc chính gồm
 | Người thực hiện kiểm thử | Chưa cập nhật | Chưa cập nhật | Chưa xác nhận |
 | Người đánh giá/QA | Chưa cập nhật | Chưa cập nhật | Chưa xác nhận |
 | Đại diện bàn giao | Chưa cập nhật | Chưa cập nhật | Chưa xác nhận |
+
+## 5. Chấm điểm theo tiêu chí A2.2
+
+> **Điểm đánh giá tạm tính:** Chấm theo tài liệu và lịch sử Git có trong workspace tại thời điểm đánh giá. Chưa xác minh được trạng thái GitHub Pages trực tuyến hoặc buổi demo; các mục này được chấm bảo thủ theo minh chứng hiện có, không xem là đã nghiệm thu.
+
+| Mã | Trọng số | Điểm tạm tính | Đánh giá và căn cứ |
+|---|---:|---:|---|
+| **A2.2.TC1** | 20% | **13/20** | Repository có cấu trúc dễ hiểu và có ít nhất ba commit nội dung với thông điệp như `docs(README): Add README`, `docs(note): Add release note` và `docs(note): Add report`. Tuy nhiên, lịch sử `main` hiện thấy chủ yếu là khởi tạo và bổ sung tài liệu, chưa thể hiện rõ chuỗi commit sửa lỗi. Có commit `fix(img): responsive image, closes #1` ở nhánh `hunglx`, nhưng chưa xác nhận commit này đã được tích hợp vào `main`. |
+| **A2.2.TC2** | 15% | **12/15** | README mô tả công nghệ, yêu cầu môi trường, chạy local và Docker. AI_LOG ghi nội dung thay đổi và kiểm tra thực tế, gồm ảnh responsive. Cần bổ sung tuyên bố minh bạch phần việc có AI hỗ trợ, phần tự thực hiện/đối chiếu của sinh viên và xác nhận nội dung cuối cùng để thể hiện rõ trách nhiệm học thuật. |
+| **A2.2.TC3** | 30% | **4/30** | Repository có `index.html` và tài nguyên tĩnh phù hợp để triển khai Pages, đồng thời có ảnh kiểm tra local. Chưa có URL GitHub Pages được nêu trong tài liệu hoặc minh chứng truy cập Pages; do đó chưa xác nhận được trang hoạt động và nội dung trực tuyến trùng với repository. |
+| **A2.2.TC4** | 20% | **12/20** | Có release note v1.0, ngày phát hành, chức năng mới và giới hạn sản phẩm. Release note ghi chưa có lỗi được sửa; chưa có kịch bản/kết quả kiểm chứng end-to-end trên bản phát hành hoặc URL triển khai. |
+| **A2.2.TC5** | 15% | **4/15** | README và release note có thông tin để chuẩn bị giải thích lựa chọn kỹ thuật và giới hạn website tĩnh. Chưa có video/demo, nội dung trình bày hoặc minh chứng trả lời câu hỏi nên chưa thể đánh giá độ mạch lạc và độ chính xác khi trình bày. |
+| **Tổng** | **100%** | **45/100** | Điểm tạm tính theo minh chứng hiện có; cần cập nhật sau khi xác minh GitHub Pages và đánh giá demo. |
+
+### Ưu tiên cải thiện để nâng điểm
+
+1. Công bố URL GitHub Pages trong README và kiểm tra URL sau triển khai; đối chiếu nội dung, ảnh và tài nguyên trên Pages với commit được phát hành.
+2. Tích hợp các commit sửa lỗi cần thiết vào nhánh bàn giao; giữ lịch sử commit có thông điệp cụ thể, không lặp lại cùng một thông điệp nếu thay đổi khác nhau.
+3. Bổ sung vào AI_LOG phần khai báo minh bạch việc sử dụng AI, phần sinh viên tự kiểm chứng/điều chỉnh, nguồn tham khảo và trách nhiệm xác nhận tính chính xác.
+4. Bổ sung kịch bản E2E ngắn có bước chạy, kết quả mong đợi/thực tế và ảnh hoặc video minh chứng trên bản Pages.
+5. Chuẩn bị demo theo trình tự: mục tiêu sản phẩm → luồng điều hướng/chức năng → quyết định kỹ thuật → kiểm chứng responsive → giới hạn hiện tại và hướng cải thiện.

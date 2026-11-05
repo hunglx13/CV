@@ -35,3 +35,9 @@ Ghi lại tại đây mỗi khi có thay đổi lớn ảnh hưởng đến ch�
 - **Nội dung:** Chụp trang thực tế tại viewport mobile 390 × 844, tablet 768 × 1024 và desktop 1440 × 900; cập nhật trạng thái và liên kết minh chứng trong báo cáo.
 - **Tệp/khu vực:** `docs/screenshots/responsive-mobile-390x844.png`, `docs/screenshots/responsive-tablet-768x1024.png`, `docs/screenshots/responsive-desktop-1440x900.png`, `docs/test_report.md`.
 - **Kiểm tra:** Xem lại ba ảnh; xác nhận không tràn ngang và tất cả ảnh trên trang tải hoàn tất ở cả ba viewport; chạy `git diff --check`.
+
+### 2026-11-05 — Chấm điểm rubric A2.2
+
+- **Nội dung:** Bổ sung điểm tạm tính, căn cứ đánh giá và ưu tiên cải thiện cho năm tiêu chí A2.2; ghi rõ GitHub Pages và demo chưa có minh chứng để xác minh.
+- **Tệp/khu vực:** `docs/test_report.md`.
+- **Kiểm tra:** Đối chiếu README, AI_LOG, release note, báo cáo kiểm thử và lịch sử Git local; xác nhận tổng điểm theo trọng số là 45/100; chạy `git diff --check`.
