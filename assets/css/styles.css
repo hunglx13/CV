@@ -1,455 +1,155 @@
-/* ==========================================================================
-   PORTFOLIO CV – styles.css
-   Chiến lược: MOBILE-FIRST
-   - Mặc định (ngoài media query) = giao diện cho màn hình nhỏ nhất (~360px)
-   - @media (min-width: 768px)  → nâng cấp cho tablet
-   - @media (min-width: 1280px) → nâng cấp cho desktop
-   ========================================================================== */
-
-/* ==========================================================================
-   1. DESIGN TOKENS – biến hệ thống thị giác (màu, chữ, khoảng cách, bo góc)
-   Dùng custom properties để thay đổi tập trung, nhất quán toàn trang.
-   ========================================================================== */
-:root {
-  /* --- Bảng màu --- */
-  --color-primary: #2baae5;      /* xanh thương hiệu */
-  --color-primary-dark: #070808;
-  --color-accent: #fa0000;       /* tím nhấn */
-  --color-text: #fc0707;         /* chữ chính */
-  --color-text-soft: #090909;    /* chữ phụ */
-  --color-bg: #ffffff;           /* nền trang */
-  --color-surface: #bed6ef;      /* nền vùng nhấn */
-  --color-border: #e2e8f0;       /* viền */
-  --color-chip: #eff6ff;         /* nền chip kỹ năng */
-
-  /* --- Typography --- */
-  --font-base: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --fs-sm: 0.875rem;   /* 14px */
-  --fs-base: 1rem;     /* 16px */
-  --fs-lg: 1.125rem;   /* 18px */
-  --fs-h2: 1.5rem;     /* 24px */
-  --fs-h1: 2rem;       /* 32px (sẽ tăng ở desktop) */
-  --lh-base: 1.6;
-
-  /* --- Khoảng cách (spacing scale) --- */
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2rem;
-  --space-5: 3rem;
-
-  /* --- Bố cục --- */
-  --container-max: 1200px;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 8px 24px rgba(15, 23, 42, 0.06);
-}
-
-/* ==========================================================================
-   2. CHUẨN HÓA BOX MODEL + RESET CƠ BẢN
-   ========================================================================== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;   /* width đã bao gồm padding + border → dễ tính toán */
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;        /* cuộn mượt khi bấm nav */
-  -webkit-text-size-adjust: 100%; /* chống iOS tự phóng chữ */
-}
-
-body {
-  font-family: var(--font-base);
-  font-size: var(--fs-base);
-  line-height: var(--lh-base);
-  color: var(--color-text);
-  background: var(--color-bg);
-  overflow-x: hidden; /* LƯỚI AN TOÀN chống cuộn ngang; bố cục bên dưới vẫn tự đúng */
-}
-
-img {
-  display: block;
-  max-width: 100%;  /* ảnh không bao giờ tràn khung → không gây cuộn ngang */
-  height: auto;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-ul {
-  list-style: none;
-}
-
-/* ==========================================================================
-   3. LAYOUT DÙNG LẠI – .container
-   ========================================================================== */
-.container {
-  width: 100%;
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--space-2); /* lề ngang an toàn trên mobile */
-}
-
-.section {
-  padding-block: var(--space-5);
-}
-
-.section-muted {
-  background: var(--color-surface);
-}
-
-.section-title {
-  font-size: var(--fs-h2);
-  margin-bottom: var(--space-1);
-}
-
-.section-sub {
-  color: var(--color-text-soft);
-  margin-bottom: var(--space-3);
-}
-
-/* ==========================================================================
-   4. HEADER + NAV (FLEXBOX)
-   Mobile: thương hiệu trên, menu xuống dòng và tự wrap → không tràn ngang.
-   ========================================================================== */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.header-inner {
-  display: flex;             /* FLEXBOX */
-  flex-wrap: wrap;           /* cho phép xuống dòng trên màn hình hẹp */
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-1);
-  padding-block: var(--space-1);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  font-weight: 700;
-}
-
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: var(--radius-sm);
-  background: var(--color-primary);
-  color: #fff;
-  font-weight: 800;
-}
-
-/* Danh sách nav cũng là flex container */
-.nav-list {
-  display: flex;            /* FLEXBOX cho thanh điều hướng */
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.nav-list a {
-  display: inline-block;
-  padding: 0.25rem 0.25rem;
-  color: var(--color-text-soft);
-  font-weight: 500;
-  border-bottom: 2px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
-}
-
-.nav-list a:hover,
-.nav-list a:focus-visible {
-  color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
-}
-
-/* ==========================================================================
-   5. HERO / GIỚI THIỆU
-   Mobile: xếp dọc (text trên, avatar dưới). Desktop: 2 cột.
-   ========================================================================== */
-.hero {
-  padding-block: var(--space-5);
-  background: linear-gradient(180deg, var(--color-surface), var(--color-bg));
-}
-
-.hero-inner {
-  display: flex;
-  flex-direction: column;     /* mobile-first: xếp dọc */
-  gap: var(--space-4);
-  align-items: flex-start;
-}
-
-.eyebrow {
-  color: var(--color-primary);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: var(--fs-sm);
-}
-
-.hero-title {
-  font-size: var(--fs-h1);
-  line-height: 1.15;
-  margin-block: 0.25rem;
-}
-
-.hero-role {
-  font-size: var(--fs-lg);
-  color: var(--color-accent);
-  font-weight: 600;
-  margin-bottom: var(--space-2);
-}
-
-.hero-desc {
-  color: var(--color-text-soft);
-  max-width: 60ch;
-  margin-bottom: var(--space-3);
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.hero-avatar img {
-  border-radius: var(--radius);
-  /* box-shadow: var(--shadow); */
-  width: 100%;
-  /* max-width: 260px; */
-}
-
-/* --- Nút bấm --- */
-.btn {
-  display: inline-block;
-  padding: 0.7rem 1.4rem;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  text-align: center;
-  transition: transform 0.12s, background 0.15s, box-shadow 0.15s;
-}
-
-.btn:active { transform: translateY(1px); }
-
-.btn-primary {
-  background: var(--color-primary);
-  color: #fff;
-  box-shadow: var(--shadow);
-}
-.btn-primary:hover { background: var(--color-primary-dark); }
-
-.btn-outline {
-  border: 2px solid var(--color-primary);
-  color: var(--color-primary);
-}
-.btn-outline:hover { background: var(--color-chip); }
-
-/* ==========================================================================
-   6. KỸ NĂNG – chip tự wrap bằng flex
-   ========================================================================== */
-.skill-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-}
-
-.skill-chip {
-  background: var(--color-chip);
-  color: var(--color-primary-dark);
-  border: 1px solid var(--color-border);
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   7. DỰ ÁN – CSS GRID cho danh sách thẻ
-   Mobile: 1 cột. Tablet: 2 cột. Desktop: 3 cột.
-   ========================================================================== */
-.project-grid {
-  display: grid;                       /* CSS GRID */
-  grid-template-columns: 1fr;          /* mobile-first: 1 cột */
-  gap: var(--space-3);
-}
-
-.card {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  overflow: hidden;                    /* bo góc gọn cả ảnh */
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
-}
-
-.card-media {
-  width: 100%;
-  aspect-ratio: 5 / 3;                 /* giữ tỉ lệ ảnh ổn định */
-  object-fit: cover;
-}
-
-.card-body {
-  padding: var(--space-2);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  flex: 1;                             /* các thẻ cao bằng nhau trong grid */
-}
-
-.card-title { font-size: var(--fs-lg); }
-
-.card-desc {
-  color: var(--color-text-soft);
-  font-size: var(--fs-sm);
-  flex: 1;
-}
-
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.tag-list li {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-text-soft);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-}
-
-.card-link {
-  color: var(--color-primary);
-  font-weight: 600;
-  font-size: var(--fs-sm);
-  margin-top: var(--space-1);
-}
-
-/* ==========================================================================
-   8. LIÊN HỆ
-   ========================================================================== */
-.contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
-.contact-list li {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-  align-items: baseline;
-}
-
-.contact-label {
-  min-width: 90px;
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-.contact-list a { color: var(--color-primary); }
-.contact-list a:hover { text-decoration: underline; }
-
-/* ==========================================================================
-   9. FOOTER
-   ========================================================================== */
-.site-footer {
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface);
-  padding-block: var(--space-3);
-}
-
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-  align-items: center;
-  justify-content: space-between;
-  color: var(--color-text-soft);
-  font-size: var(--fs-sm);
-}
-
-.to-top { color: var(--color-primary); font-weight: 600; }
-
-/* ==========================================================================
-   10. MEDIA QUERIES – nâng cấp theo breakpoint (mobile-first)
-   ========================================================================== */
-
-/* ----- TABLET: ≥ 768px ----- */
-@media (min-width: 768px) {
-  :root {
-    --fs-h1: 2.5rem;   /* 40px */
-    --fs-h2: 1.75rem;  /* 28px */
-  }
-
-  .container { padding-inline: var(--space-3); }
-
-  /* Hero chuyển sang 2 cột */
-  .hero-inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .hero-text { flex: 1; }
-  .hero-avatar img { max-width: 300px; }
-
-  /* Lưới dự án: 2 cột */
-  .project-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* ----- DESKTOP: ≥ 1280px ----- */
-@media (min-width: 1280px) {
-  :root {
-    --fs-h1: 3rem;     /* 48px */
-  }
-
-  /* Lưới dự án: 3 cột */
-  .project-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .hero-avatar img { max-width: 340px; }
-}
-
-/* ==========================================================================
-   11. HỖ TRỢ TIẾP CẬN & ƯA THÍCH NGƯỜI DÙNG
-   ========================================================================== */
-:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
+:root{--bg:#0b1224;--surface:#131f36;--surface-2:#172743;--text:#edf4ff;--muted:#a9bad1;--accent:#55e5c0;--accent2:#78a9ff;--line:rgba(179,207,240,.15);--radius:22px;--max:1120px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.65}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+button,a,input,textarea{outline-offset:4px}
+img{display:block;max-width:100%}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 8%,rgba(85,229,192,.085),transparent 40%),radial-gradient(ellipse at 85% 20%,rgba(120,169,255,.09),transparent 42%)}
+.site-header{position:sticky;top:0;z-index:50;background:rgba(11,18,36,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.header-inner,.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.header-inner{min-height:76px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px}
+.brand-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#071324;font-weight:900;box-shadow:0 8px 26px rgba(85,229,192,.16)}
+.nav-list{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.nav-list a{display:block;padding:10px 14px;border-radius:10px;color:var(--muted);transition:color .25s,background .25s}
+.nav-list a:hover,.nav-list a.active{color:var(--accent);background:rgba(85,229,192,.08)}
+.hero{padding:110px 0 105px;overflow:hidden}
+.hero-inner{display:grid;grid-template-columns:1.25fr .75fr;gap:75px;align-items:center}
+.eyebrow,.kicker{font-size:.85rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.hero-title{font-size:clamp(3rem,7vw,5.7rem);line-height:1.09;letter-spacing:-.055em;margin:10px 0 18px}
+.hero-role{font-size:clamp(1.1rem,2.3vw,1.5rem);font-weight:700;color:var(--accent2);margin:0 0 17px}
+.hero-desc{color:var(--muted);max-width:590px;font-size:1.06rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:13px;margin-top:30px}
+.btn{border:1px solid transparent;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 21px;cursor:pointer;font-weight:750;transition:transform .25s,box-shadow .25s,background .25s}
+.btn:hover{transform:translateY(-4px)}
+.btn-primary{background:var(--accent);color:#071a25}
+.btn-primary:hover{box-shadow:0 12px 35px rgba(85,229,192,.22)}
+.btn-outline{border-color:rgba(120,169,255,.46);color:var(--text);background:rgba(120,169,255,.07)}
+.btn-outline:hover{background:rgba(120,169,255,.18)}
+.hero-avatar{position:relative;margin:0;max-width:360px;justify-self:center;width:100%;aspect-ratio:1}
+.hero-avatar::before{content:"";position:absolute;inset:-15px;border-radius:36%;background:linear-gradient(130deg,var(--accent),var(--accent2));filter:blur(23px);opacity:.28;animation:glow 5s ease-in-out infinite alternate}
+.hero-avatar img{position:relative;width:100%;height:100%;object-fit:cover;border:5px solid rgba(124,172,236,.25);border-radius:35%;background:#1c3150;box-shadow:0 20px 70px rgba(0,0,0,.23);animation:float 5s ease-in-out infinite}
+.section{padding:90px 0}
+.section-muted{background:rgba(18,31,53,.58);border-block:1px solid var(--line)}
+.section-title{font-size:clamp(2rem,4vw,2.8rem);line-height:1.2;letter-spacing:-.035em;margin:6px 0 10px}
+.section-sub{color:var(--muted);margin:0 0 34px}
+.skill-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;list-style:none;padding:0;margin:0}
+.skill-chip{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;font-weight:650;transition:transform .25s,border-color .25s,background .25s}
+.skill-chip::before{content:"✦";color:var(--accent);margin-right:12px}
+.skill-chip:hover{transform:translateY(-6px);border-color:rgba(85,229,192,.55);background:var(--surface-2)}
+.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .35s,border-color .35s,box-shadow .35s}
+.card:hover{transform:translateY(-9px);border-color:rgba(120,169,255,.45);box-shadow:0 20px 50px rgba(0,0,0,.18)}
+.card-media{width:100%;height:225px;object-fit:cover;background:#243c59;transition:transform .55s}
+.card:hover .card-media{transform:scale(1.05)}
+.media-wrap{overflow:hidden}
+.card-body{padding:24px}
+.card-title{font-size:1.3rem;margin:0 0 8px}
+.card-desc{color:var(--muted);margin:0 0 16px}
+.tag-list{display:flex;gap:8px;flex-wrap:wrap;list-style:none;margin:0 0 20px;padding:0}
+.tag-list li{font-size:.79rem;border:1px solid var(--line);color:var(--accent2);padding:3px 10px;border-radius:100px}
+.card-link{color:var(--accent);font-weight:750}
+.card-link:hover{text-decoration:underline}
+.contact-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:45px;align-items:start}
+.contact-intro{color:var(--muted);margin:0 0 28px}
+.contact-list{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.contact-list li{padding:16px 18px;border-radius:15px;background:var(--surface);border:1px solid var(--line);overflow-wrap:anywhere}
+.contact-label{display:block;text-transform:uppercase;font-size:.72rem;letter-spacing:.1em;color:var(--accent);font-weight:800;margin-bottom:4px}
+.contact-list a:hover{color:var(--accent)}
+.contact-form{padding:27px;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);box-shadow:0 16px 35px rgba(0,0,0,.08)}
+.contact-form h3{font-size:1.4rem;margin:0 0 18px}
+.field{margin-bottom:17px}
+.field label{display:block;font-size:.93rem;font-weight:700;margin-bottom:7px}
+.field input,.field textarea{width:100%;border:1px solid rgba(169,186,209,.27);border-radius:11px;padding:13px 14px;color:var(--text);background:#0e192d;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(85,229,192,.1)}
+.field textarea{resize:vertical;min-height:135px}
+.form-note{font-size:.82rem;color:var(--muted);margin:12px 0 0}
+.site-footer{padding:27px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.footer-inner p{margin:0}
+.to-top{color:var(--accent);font-weight:750}
+.to-top:hover{text-decoration:underline}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.75,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.hero-text{animation:slideUp .85s ease both}
+.hero-avatar{animation:fadeIn 1.1s .15s both}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:100;pointer-events:none}
+@keyframes slideUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+@keyframes glow{to{opacity:.46;transform:scale(1.05)}}
+@media (max-width:800px){.hero{padding:74px 0}
+.hero-inner{grid-template-columns:1fr;gap:55px}
+.hero-avatar{width:min(300px,78%)}
+.skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.contact-layout{grid-template-columns:1fr;gap:28px}
+.nav-list a{padding:8px}}
+@media (max-width:560px){.container{width:min(var(--max),calc(100% - 30px))}
+.header-inner{align-items:flex-start;flex-direction:column;gap:6px;padding:12px 0}
+.nav-list{flex-wrap:wrap;gap:0}
+.nav-list a{font-size:.88rem;padding:7px 10px}
+.brand-mark{width:33px;height:33px}
+.hero{padding:64px 0 70px}
+.hero-title{font-size:2.9rem}
+.section{padding:65px 0}
+.skill-grid,.project-grid{grid-template-columns:1fr}
+.contact-form{padding:20px}
+.footer-inner{align-items:flex-start;flex-direction:column;gap:10px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+.reveal{opacity:1;transform:none}}
+:root{--bg:#100d1e;--surface:#211a34;--surface-2:#2c2045;--text:#fff8f8;--muted:#c9bbd5;--accent:#ffb16e;--accent2:#d49cff;--line:rgba(255,211,244,.18);--radius:24px;--max:1200px}
+body{background:var(--bg);overflow-x:clip}
+body::before{background:radial-gradient(ellipse at 15% 5%,rgba(227,97,181,.15),transparent 38%),radial-gradient(ellipse at 85% 18%,rgba(124,80,232,.19),transparent 44%),radial-gradient(ellipse at 50% 68%,rgba(255,177,110,.09),transparent 45%)}
+.site-header{background:rgba(16,13,30,.81)}
+.brand-mark{background:linear-gradient(135deg,#ffb16e,#e778bc,#ab8dff);color:#20102b;box-shadow:0 10px 28px rgba(239,118,190,.3)}
+.hero{position:relative}
+.hero::after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;right:-130px;top:20px;border:1px solid rgba(227,164,255,.17);box-shadow:0 0 0 55px rgba(227,164,255,.025),0 0 0 105px rgba(227,164,255,.025);pointer-events:none;animation:orbitPulse 8s ease-in-out infinite alternate}
+.hero-title{background:linear-gradient(105deg,#fff 4%,#ffd2b0 46%,#e0b6ff 86%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 10px 26px rgba(224,134,186,.12))}
+.hero-avatar img{border-radius:26%;border-color:rgba(255,177,110,.4)}
+.hero-avatar::before{border-radius:28%;background:linear-gradient(130deg,#ffb16e,#e778bc,#ab8dff)}
+.btn-primary{background:linear-gradient(115deg,#ffc18a,#f29fc4);color:#231129}
+.btn-primary:hover{box-shadow:0 16px 36px rgba(242,159,196,.28)}
+.btn-outline{border-color:rgba(223,176,255,.48);background:rgba(178,110,249,.09)}
+.btn-outline:hover{background:rgba(178,110,249,.21)}
+.skill-chip,.card,.contact-form,.contact-list li{box-shadow:0 8px 27px rgba(4,3,14,.14)}
+.skill-chip,.card{position:relative}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,190,150,0);transition:box-shadow .35s}
+.card:hover::after{box-shadow:inset 0 0 0 1px rgba(255,190,150,.55)}
+.card-media{height:245px}
+.card:hover .card-media{transform:scale(1.085) rotate(.4deg)}
+.project-grid{grid-template-columns:1fr}
+.section-muted{background:rgba(38,26,59,.56)}
+.section-title{position:relative}
+.section-title::after{content:"";display:block;width:55px;height:4px;border-radius:20px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin-top:14px;transform-origin:left;animation:accentGrow 1.5s ease both}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #ffce8d;outline-offset:4px}
+.reveal{transition-duration:.85s}
+.skill-chip.reveal:nth-child(3n/**/+2),.card.reveal:nth-child(even){transition-delay:.09s}
+.skill-chip.reveal:nth-child(3n){transition-delay:.16s}
+@keyframes orbitPulse{to{transform:translate(-30px,20px) scale(1.12);opacity:.4}}
+@keyframes accentGrow{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+@keyframes sway{to{transform:rotate(-5deg) translateY(-12px)}}
+@media (min-width:768px){.hero-inner{grid-template-columns:1.25fr .75fr}
+.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1280px){.project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){.hero::after,.section-title::after{animation:none!important}}
+/* Điểm nhấn thị giác và chuyển động */
+.hero-title {background-size: 200% auto; animation: titleShine 7s ease-in-out infinite alternate;}
+.hero::before {content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 72% 35%,rgba(221,135,255,.09),transparent 38%);
+  animation: softAura 8s ease-in-out infinite alternate;}
+.card {isolation:isolate;}
+.card:hover {transform:translateY(-12px);}
+.card:hover .card-title {color:#ffcf9d;}
+.skill-chip:hover::before {display:inline-block;animation: starTurn .7s ease;}
+.hero-avatar {filter:drop-shadow(0 0 28px rgba(219,130,255,.16));}
+.btn-primary {background-size:180% 180%;animation:buttonGlow 6s ease-in-out infinite;}
+@keyframes titleShine {to {background-position:100% center;}}
+@keyframes softAura {to {opacity:.38;transform:translateX(-35px);}}
+@keyframes starTurn {to {transform:rotate(180deg);}}
+@keyframes buttonGlow {50% {background-position:100% 100%;}}
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  .hero-title,.hero::before,.btn-primary {animation:none!important;}
 }
